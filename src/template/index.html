@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WebSocket Service</title>
+    <meta name="keywords" content="crypto" />
+    <meta name="description" content="EXZI" />
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+   const socket = io("http://localhost:3000"); 
+
+    socket.on("connect", () => {
+      console.log(`Connection established: ${socket.id}`);
+
+      socket.emit("subscribe-pair", {
+        pair: "BTC/USD"
+      })
+    })
+
+    // Listen to orderBookChanges for BTC/USD
+    socket.on('orderBookChanges', (data) => {
+      console.log(`There is a new data set: ${JSON.stringify(data)}`)
+    })
+
+  </script>
+  <body>
+    <h1>EXZI Order Books Microservice!</h1>
+  </body>
+</html>
